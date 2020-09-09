@@ -20,6 +20,8 @@ public class WebhookTestController {
     
     @RequestMapping(value = "/slack", method = RequestMethod.POST)
     public ResponseEntity<Void> webhookTest(@RequestBody String payload) {
+        
+        // TODO: CheckerValue 추상클래스 역직렬화
         PinpointWebhookPayload pinpointWebhookPayload = gson.fromJson(payload, PinpointWebhookPayload.class);
         slackNotifier.send(pinpointWebhookPayload);
         return new ResponseEntity<>(HttpStatus.OK);
