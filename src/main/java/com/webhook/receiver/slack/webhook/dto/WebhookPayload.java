@@ -1,6 +1,6 @@
 package com.webhook.receiver.slack.webhook.dto;
 
-public class PinpointWebhookPayload {
+public class WebhookPayload {
     private String pinpointUrl;
     private String batchEnv;
     private Integer sequenceCount;
@@ -9,7 +9,7 @@ public class PinpointWebhookPayload {
     private Integer threshold;
     private String notes;
     private String checkerType;
-    private CheckerValue checkerValue;
+    private CheckerDetectedValue checkerDetectedValue;
     private UserGroupMemberPayload userGroupMemberPayload;
     
     public UserGroupMemberPayload getUserGroupMemberPayload() {
@@ -48,8 +48,8 @@ public class PinpointWebhookPayload {
         return notes;
     }
     
-    public CheckerValue getCheckerValue() {
-        return checkerValue;
+    public CheckerDetectedValue getCheckerDetectedValue() {
+        return checkerDetectedValue;
     }
     
     public void setPinpointUrl(String pinpointUrl) {
@@ -84,8 +84,8 @@ public class PinpointWebhookPayload {
         this.checkerType = checkerType;
     }
     
-    public void setCheckerValue(CheckerValue checkerValue) {
-        this.checkerValue = checkerValue;
+    public void setCheckerDetectedValue(CheckerDetectedValue checkerDetectedValue) {
+        this.checkerDetectedValue = checkerDetectedValue;
     }
     
     public void setUserGroupMemberPayload(UserGroupMemberPayload userGroupMemberPayload) {
