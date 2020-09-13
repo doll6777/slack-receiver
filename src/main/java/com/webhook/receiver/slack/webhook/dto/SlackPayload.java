@@ -6,4 +6,8 @@ public class SlackPayload {
     public SlackPayload(String text) {
         this.text = text;
     }
+    
+    public String getText() {
+        return text;
+    }
 }
