@@ -1,9 +1,9 @@
-package com.webhook.receiver.slack.webhook;
+package com.webhook.receiver.slack.webhook.sender;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.webhook.receiver.slack.webhook.dto.SlackPayload;
-import com.webhook.receiver.slack.webhook.dto.WebhookPayload;
+import com.webhook.receiver.slack.webhook.sender.vo.SlackPayload;
+import com.webhook.receiver.slack.webhook.vo.WebhookPayload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,8 +36,8 @@ public class SlackNotifier {
                 webhookPayload.getBatchEnv(), webhookPayload.getCheckerName(), webhookPayload.getApplicationId()));
         message.append(webhookPayload.getCheckerDetectedValue().getMessage());
         message.append(String.format(" (Threshold: %s%s) #%s ",
-                webhookPayload.getThreshold(), webhookPayload.getCheckerDetectedValue().getUnit(), webhookPayload.getSequenceCount()));
-        
+                webhookPayload.getThreshold(), webhookPayload.getUnit(), webhookPayload.getSequenceCount()));
+
         SlackPayload slackPayload = new SlackPayload(message.toString());
         String slackPayloadToSend = null;
         try {
