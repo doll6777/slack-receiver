@@ -1,4 +1,4 @@
-package com.webhook.receiver.slack.webhook.dto;
+package com.webhook.receiver.slack.webhook.sender.vo;
 
 public class SlackPayload {
     private String text;
