@@ -5,18 +5,18 @@ import com.webhook.receiver.slack.webhook.deserializer.WebhookPayloadDeserialize
 
 @JsonDeserialize(using = WebhookPayloadDeserializer.class)
 public class WebhookPayload {
-    private String pinpointUrl;
-    private String batchEnv;
-    private String applicationId;
-    private String serviceType;
-    private String checkerName;
-    private String checkerType;
-    private UserGroup userGroup;
-    private CheckerDetectedValue checkerDetectedValue;
-    private String unit;
-    private Integer threshold;
-    private String notes;
-    private Integer sequenceCount;
+    private final String pinpointUrl;
+    private final String batchEnv;
+    private final String applicationId;
+    private final String serviceType;
+    private final String checkerName;
+    private final String checkerType;
+    private final UserGroup userGroup;
+    private final CheckerDetectedValue checkerDetectedValue;
+    private final String unit;
+    private final Integer threshold;
+    private final String notes;
+    private final Integer sequenceCount;
     
     public WebhookPayload(String pinpointUrl, String batchEnv, String applicationId, String serviceType, String checkerName, String checkerType, UserGroup userGroup, CheckerDetectedValue checkerDetectedValue, String unit, Integer threshold, String notes, Integer sequenceCount) {
         this.pinpointUrl = pinpointUrl;

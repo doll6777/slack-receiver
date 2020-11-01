@@ -3,25 +3,31 @@ package com.webhook.receiver.slack.webhook.deserializer;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webhook.receiver.slack.webhook.vo.*;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-@Component
 public class WebhookPayloadDeserializer extends JsonDeserializer<WebhookPayload> {
     
-    private ObjectMapper objectMapper;
+    private static final String LONG_VALUE_AGENT_CHECKER = "LongValueAgentChecker";
+    private static final String LONG_VALUE_ALARM_CHECKER = "LongValueAlarmChecker";
+    private static final String BOOLEAN_VALUE_AGENT_CHECKER = "BooleanValueAgentChecker";
+    private static final String DATA_SOURCE_ALARM_LIST_VALUE_AGENT_CHECKER = "DataSourceAlarmListValueAgentChecker";
+    
+    private final ObjectMapper objectMapper;
     
     public WebhookPayloadDeserializer(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
     
     @Override
-    public WebhookPayload deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public WebhookPayload deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JsonNode jsonNode = jp.readValueAsTree();
         if (!jsonNode.isObject()) {
             throw new JsonParseException(jp, "Content is not Json Object");
@@ -38,32 +44,36 @@ public class WebhookPayloadDeserializer extends JsonDeserializer<WebhookPayload>
         String notes = jsonNode.get("notes").asText();
         Integer sequenceCount = jsonNode.get("sequenceCount").asInt();
         UserGroup userGroup = objectMapper.treeToValue(jsonNode.get("userGroup"), UserGroup.class);
-        
-        CheckerDetectedValue checkerDetectedValue = null;
+//        CheckerDetectedValue checkerDetectedValue = objectMapper.treeToValue(jsonNode.get("checkerDetectedValue"), CheckerDetectedValue.class);
+    
         JsonNode checkerDetectedValueNode = jsonNode.get("checkerDetectedValue");
-        if (checkerType.equals("LongValueAlarmChecker")) {
-            checkerDetectedValue = new LongValueAlarmCheckerDetectedValue(checkerDetectedValueNode.asLong());
-        }
-
-        if (checkerType.equals("LongValueAgentChecker")) {
-            List<DetectedAgent<Long>> detectedAgents =
-                    Arrays.asList(objectMapper.treeToValue(checkerDetectedValueNode, DetectedAgent[].class));
-            checkerDetectedValue = new LongValueAgentCheckerDetectedValue(detectedAgents);
-        }
-
-        if (checkerType.equals("BooleanValueAgentChecker")) {
-            List<DetectedAgent<Boolean>> detectedAgents =
-                    Arrays.asList(objectMapper.treeToValue(checkerDetectedValueNode, DetectedAgent[].class));
-            checkerDetectedValue = new BooleanValueAgentCheckerDetectedValue(detectedAgents);
-        }
-
-        if (checkerType.equals("DataSourceAlarmListValueAgentChecker")) {
-            List<DetectedAgent<List<DataSourceAlarm>>> detectedAgents =
-                    Arrays.asList(objectMapper.treeToValue(checkerDetectedValueNode, DetectedAgent[].class));
-            checkerDetectedValue = new DataSourceAlarmListValueAgentCheckerDetectedValue(detectedAgents);
-        }
+        CheckerDetectedValue checkerDetectedValue = getDetectedAgents(checkerDetectedValueNode, checkerType);
         
         return new WebhookPayload(pinpointUrl, batchEnv, applicationId, serviceType, checkerName, checkerType,
                 userGroup, checkerDetectedValue, unit, threshold, notes, sequenceCount);
+    }
+    
+    private CheckerDetectedValue getDetectedAgents(JsonNode checkerDetectedValueNode, String checkerType) throws JsonProcessingException {
+        List detectedAgents;
+        CheckerDetectedValue checkerDetectedValue = null;
+    
+        switch(checkerType) {
+            case LONG_VALUE_ALARM_CHECKER:
+                checkerDetectedValue = new LongValueAlarmCheckerDetectedValue(checkerDetectedValueNode.asLong());
+                break;
+            case LONG_VALUE_AGENT_CHECKER:
+                detectedAgents = Arrays.asList(objectMapper.treeToValue(checkerDetectedValueNode, DetectedAgent[].class));
+                checkerDetectedValue = new LongValueAgentCheckerDetectedValue(detectedAgents);
+                break;
+            case BOOLEAN_VALUE_AGENT_CHECKER:
+                detectedAgents = Arrays.asList(objectMapper.treeToValue(checkerDetectedValueNode, DetectedAgent[].class));
+                checkerDetectedValue = new BooleanValueAgentCheckerDetectedValue(detectedAgents);
+                break;
+            case DATA_SOURCE_ALARM_LIST_VALUE_AGENT_CHECKER:
+                detectedAgents = Arrays.asList(objectMapper.treeToValue(checkerDetectedValueNode, DetectedAgent[].class));
+                checkerDetectedValue = new DataSourceAlarmListValueAgentCheckerDetectedValue(detectedAgents);
+                break;
+        }
+        return checkerDetectedValue;
     }
 }

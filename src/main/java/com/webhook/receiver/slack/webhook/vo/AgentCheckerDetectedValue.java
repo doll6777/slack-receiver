@@ -3,6 +3,8 @@ package com.webhook.receiver.slack.webhook.vo;
 import java.util.List;
 
 public abstract class AgentCheckerDetectedValue<T> implements CheckerDetectedValue {
+    public AgentCheckerDetectedValue() {
+    }
     
     protected List<DetectedAgent<T>> detectedAgents;
     
