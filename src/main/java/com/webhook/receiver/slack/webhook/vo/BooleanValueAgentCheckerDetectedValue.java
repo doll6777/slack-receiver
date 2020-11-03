@@ -1,15 +1,15 @@
 package com.webhook.receiver.slack.webhook.vo;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import java.util.List;
 
+@JsonTypeName("BooleanValueAgentChecker")
 public class BooleanValueAgentCheckerDetectedValue extends AgentCheckerDetectedValue<Boolean> {
     
-    public BooleanValueAgentCheckerDetectedValue(List<DetectedAgent<Boolean>> detectedAgents) {
-        super(detectedAgents);
-    }
-    
-    @Override
-    public String getMessage() {
-        return "Message";
+    @JsonCreator
+    public BooleanValueAgentCheckerDetectedValue(List<DetectedAgent<Boolean>> value) {
+        super(value);
     }
 }

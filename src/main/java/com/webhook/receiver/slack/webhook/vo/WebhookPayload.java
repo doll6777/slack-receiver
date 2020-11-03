@@ -1,9 +1,6 @@
 package com.webhook.receiver.slack.webhook.vo;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.webhook.receiver.slack.webhook.deserializer.WebhookPayloadDeserializer;
-
-@JsonDeserialize(using = WebhookPayloadDeserializer.class)
+//@JsonDeserialize(using = WebhookPayloadDeserializer.class)
 public class WebhookPayload {
     private final String pinpointUrl;
     private final String batchEnv;

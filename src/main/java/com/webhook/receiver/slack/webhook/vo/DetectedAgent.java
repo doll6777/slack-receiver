@@ -12,4 +12,12 @@ public class DetectedAgent<T> {
     public T getAgentValue() {
         return agentValue;
     }
+    
+    @Override
+    public String toString() {
+        return "DetectedAgent{" +
+                "agentId='" + agentId + '\'' +
+                ", agentValue=" + agentValue +
+                '}';
+    }
 }

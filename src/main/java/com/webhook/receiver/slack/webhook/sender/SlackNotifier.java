@@ -50,7 +50,7 @@ public class SlackNotifier {
                 webhookPayload.getBatchEnv(),
                 webhookPayload.getCheckerName(),
                 webhookPayload.getApplicationId(),
-                webhookPayload.getCheckerDetectedValue().getMessage(),
+                webhookPayload.getCheckerDetectedValue().toString(),
                 webhookPayload.getThreshold(),
                 webhookPayload.getUnit(),
                 webhookPayload.getSequenceCount()

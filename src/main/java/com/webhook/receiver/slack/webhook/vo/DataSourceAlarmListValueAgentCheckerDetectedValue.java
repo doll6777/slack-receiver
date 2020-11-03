@@ -1,15 +1,15 @@
 package com.webhook.receiver.slack.webhook.vo;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import java.util.List;
 
+@JsonTypeName("DataSourceAlarmListValueAgentChecker")
 public class DataSourceAlarmListValueAgentCheckerDetectedValue extends AgentCheckerDetectedValue<List<DataSourceAlarm>> {
     
-    public DataSourceAlarmListValueAgentCheckerDetectedValue(List<DetectedAgent<List<DataSourceAlarm>>> detectedAgents) {
-        super(detectedAgents);
-    }
-    
-    @Override
-    public String getMessage() {
-        return "Message";
+    @JsonCreator
+    public DataSourceAlarmListValueAgentCheckerDetectedValue(List<DetectedAgent<List<DataSourceAlarm>>> value) {
+        super(value);
     }
 }

@@ -1,15 +1,13 @@
 package com.webhook.receiver.slack.webhook.vo;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
+@JsonTypeName("LongValueAlarmChecker")
 public class LongValueAlarmCheckerDetectedValue extends AlarmCheckerDetectedValue<Long> {
     
-    public LongValueAlarmCheckerDetectedValue(Long detectedValue) {
-        super(detectedValue);
+    @JsonCreator
+    public LongValueAlarmCheckerDetectedValue(Long value) {
+        super(value);
     }
-    
-    @Override
-    public String getMessage() {
-        return "LongValueAlarmChecker Message";
-    }
-    
 }

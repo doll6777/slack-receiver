@@ -1,15 +1,22 @@
 package com.webhook.receiver.slack.webhook.vo;
 
+
 public abstract class AlarmCheckerDetectedValue<T> implements CheckerDetectedValue {
     
-    protected T detectedValue;
+    protected T value;
     
-    protected AlarmCheckerDetectedValue(T detectedValue) {
-        this.detectedValue = detectedValue;
+    public AlarmCheckerDetectedValue(T value) {
+        this.value = value;
     }
     
-    public T getDetectedValue() {
-        return detectedValue;
+    public T getValue() {
+        return value;
     }
     
+    @Override
+    public String toString() {
+        return "AlarmCheckerDetectedValue{" +
+                "value=" + value +
+                '}';
+    }
 }
