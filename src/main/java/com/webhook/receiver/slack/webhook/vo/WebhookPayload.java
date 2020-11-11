@@ -1,6 +1,5 @@
 package com.webhook.receiver.slack.webhook.vo;
 
-//@JsonDeserialize(using = WebhookPayloadDeserializer.class)
 public class WebhookPayload {
     private final String pinpointUrl;
     private final String batchEnv;

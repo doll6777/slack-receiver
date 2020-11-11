@@ -4,6 +4,7 @@ import com.webhook.receiver.slack.webhook.sender.vo.SlackPayload;
 import com.webhook.receiver.slack.webhook.vo.WebhookPayload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -16,14 +17,14 @@ public class SlackNotifier {
     
     private final Logger logger = LoggerFactory.getLogger(SlackNotifier.class.getName());
     private final RestTemplate restTemplate;
-    
-    @Value("${slack.webhook.url}")
     private String incomingWebhookUrl;
     
     private static final String SLACK_MESSAGE_TEMPLATE = "[PINPOINT-%s] %s Alarm for %s Service. %s, (Threshold: %s%s) #%s ";
     
-    public SlackNotifier(RestTemplate restTemplate) {
+    @Autowired
+    public SlackNotifier(RestTemplate restTemplate, @Value("${slack.webhook.url}") final String incomingWebhookUrl) {
         this.restTemplate = restTemplate;
+        this.incomingWebhookUrl = incomingWebhookUrl;
     }
     
     public boolean send(WebhookPayload webhookPayload) {
@@ -38,7 +39,7 @@ public class SlackNotifier {
         try {
             restTemplate.postForObject(new URI(incomingWebhookUrl), slackPayload, String.class);
             logger.info("Send Slack : {}", sendMessage);
-        } catch (URISyntaxException e) {
+        } catch (Exception e) {
             logger.error(e.getMessage());
             return false;
         }
