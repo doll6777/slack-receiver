@@ -18,13 +18,24 @@ public class JacksonDeserializeTest {
     @Autowired
     private JacksonTester<WebhookPayload> json;
     
-    private String getContent(String checkerType) {
-         return "{\"pinpointUrl\":\"http://pinpoint.com\",\"batchEnv\":\"release\",\"applicationId\":\"TESTAPP\",\"serviceType\":\"TOMCAT\",\"checkerName\":\"HEAP USAGE RATE\",\"checkerType\":\"LongValueAgentChecker\",\"userGroup\":{\"userGroupId\":\"Group-1\",\"userGroupMembers\":[{\"id\":null,\"name\":\"minsookim\",\"email\":\"pinpoint@naver.com\",\"department\":\"Platform\",\"phoneNumber\":\"01012345678\",\"phoneCountryCode\":82}]},\"checkerDetectedValue\":{\"type\":\"\",\"value\":[{\"agentId\":\"agentIdtest\",\"agentValue\":true}]},\"unit\":\"%\",\"threshold\":5,\"notes\":\"Note Example\",\"sequenceCount\":4}\n";
+    private String getContent(String checkerType, String value) {
+        return "{\"pinpointUrl\":\"http://pinpoint.com\"," +
+                "\"batchEnv\":\"release\"," +
+                "\"applicationId\":\"TESTAPP\"," +
+                "\"serviceType\":\"TOMCAT\"," +
+                "\"checkerName\":\"HEAP USAGE RATE\"," +
+                "\"checkerType\":\"LongValueAgentChecker\"," +
+                "\"userGroup\":{\"userGroupId\":\"Group-1\"," +
+                "\"userGroupMembers\":[{\"id\":null,\"name\":\"minsookim\"," +
+                "\"email\":\"pinpoint@naver.com\",\"department\":\"Platform\"," +
+                "\"phoneNumber\":\"01012345678\",\"phoneCountryCode\":82}]}," +
+                "\"checkerDetectedValue\":{\"type\":\"" + checkerType + "\",\"value\":" + value + "},\"unit\":\"%\",\"threshold\":5,\"notes\":\"Note Example\"," +
+                "\"sequenceCount\":4}\n";
     }
     
     @Test
     public void BooleanValueAgentCheckerTest() throws IOException {
-        String content = "{\"pinpointUrl\":\"http://pinpoint.com\",\"batchEnv\":\"release\",\"applicationId\":\"TESTAPP\",\"serviceType\":\"TOMCAT\",\"checkerName\":\"HEAP USAGE RATE\",\"checkerType\":\"LongValueAgentChecker\",\"userGroup\":{\"userGroupId\":\"Group-1\",\"userGroupMembers\":[{\"id\":null,\"name\":\"minsookim\",\"email\":\"pinpoint@naver.com\",\"department\":\"Platform\",\"phoneNumber\":\"01012345678\",\"phoneCountryCode\":82}]},\"checkerDetectedValue\":{\"type\":\"BooleanValueAgentChecker\",\"value\":[{\"agentId\":\"agentIdtest\",\"agentValue\":true}]},\"unit\":\"%\",\"threshold\":5,\"notes\":\"Note Example\",\"sequenceCount\":4}\n";
+        String content = getContent("BooleanValueAgentChecker", "[{\"agentId\":\"agentIdtest\",\"agentValue\":true}]");
         
         CheckerDetectedValue detectedValue = json.parseObject(content).getCheckerDetectedValue();
         Assertions.assertTrue(detectedValue instanceof BooleanValueAgentCheckerDetectedValue);
@@ -32,20 +43,33 @@ public class JacksonDeserializeTest {
     
     @Test(expected = Exception.class)
     public void NotExistCheckerNameTest() throws IOException {
-        String content = "{\"pinpointUrl\":\"http://pinpoint.com\",\"batchEnv\":\"release\",\"applicationId\":\"TESTAPP\",\"serviceType\":\"TOMCAT\",\"checkerName\":\"HEAP USAGE RATE\",\"checkerType\":\"LongValueAgentChecker\",\"userGroup\":{\"userGroupId\":\"Group-1\",\"userGroupMembers\":[{\"id\":null,\"name\":\"minsookim\",\"email\":\"pinpoint@naver.com\",\"department\":\"Platform\",\"phoneNumber\":\"01012345678\",\"phoneCountryCode\":82}]},\"checkerDetectedValue\":{\"type\":\"NotExist\",\"value\":[{\"agentId\":\"agentIdtest\",\"agentValue\":true}]},\"unit\":\"%\",\"threshold\":5,\"notes\":\"Note Example\",\"sequenceCount\":4}\n";
+        String content = getContent("NotExistChecker", "[{\"agentId\":\"agentIdtest\",\"agentValue\":true}]");
+    
         CheckerDetectedValue detectedValue = json.parseObject(content).getCheckerDetectedValue();
     }
     
     @Test
     public void LongValueAlarmCheckerTest() throws IOException {
+        String content = getContent("LongValueAlarmChecker", "1");
+    
+        CheckerDetectedValue detectedValue = json.parseObject(content).getCheckerDetectedValue();
+        Assertions.assertTrue(detectedValue instanceof LongValueAlarmCheckerDetectedValue);
     }
     
     @Test
     public void LongValueAgentCheckerTest() throws IOException {
+        String content = getContent("LongValueAgentChecker", "[{\"agentId\":\"agentIdtest\",\"agentValue\":1}]");
+    
+        CheckerDetectedValue detectedValue = json.parseObject(content).getCheckerDetectedValue();
+        Assertions.assertTrue(detectedValue instanceof LongValueAgentCheckerDetectedValue);
     }
     
     @Test
     public void DataSourceAlarmListValueCheckerTest() throws IOException {
+        String content = getContent("DataSourceAlarmListValueAgentChecker", "[{\"agentId\":\"agentIdtest\",\"agentValue\":[{\"databaseName\":\"databaseName\",\"connectionValue\":1}]}]");
+    
+        CheckerDetectedValue detectedValue = json.parseObject(content).getCheckerDetectedValue();
+        Assertions.assertTrue(detectedValue instanceof DataSourceAlarmListValueAgentCheckerDetectedValue);
     }
     
 }

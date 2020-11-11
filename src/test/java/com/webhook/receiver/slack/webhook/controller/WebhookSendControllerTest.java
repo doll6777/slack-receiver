@@ -1,11 +1,8 @@
 package com.webhook.receiver.slack.webhook.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.webhook.receiver.slack.webhook.sender.vo.SlackPayload;
 import com.webhook.receiver.slack.webhook.vo.UserGroup;
 import com.webhook.receiver.slack.webhook.vo.WebhookPayload;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -15,13 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-//@SpringBootTest(
-//        properties = {
-//                "slack.webhook.url=webhook.url",
-//        },
-//        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @WebMvcTest(controllers = {WebhookSendController.class})
 class WebhookSendControllerTest {
     
@@ -33,11 +23,6 @@ class WebhookSendControllerTest {
     
     @MockBean
     WebhookSendController loggedUserManager;
-    
-    @BeforeEach
-    void setUp() throws Exception {
-        String userJson = objectMapper.writeValueAsString(new SlackPayload( "SLACK TEXT"));
-    }
     
     @Test
     void sendWebhook() throws Exception {
