@@ -21,6 +21,7 @@ public class JacksonDeserializeTest {
     private String getContent(String checkerType) {
          return "{\"pinpointUrl\":\"http://pinpoint.com\",\"batchEnv\":\"release\",\"applicationId\":\"TESTAPP\",\"serviceType\":\"TOMCAT\",\"checkerName\":\"HEAP USAGE RATE\",\"checkerType\":\"LongValueAgentChecker\",\"userGroup\":{\"userGroupId\":\"Group-1\",\"userGroupMembers\":[{\"id\":null,\"name\":\"minsookim\",\"email\":\"pinpoint@naver.com\",\"department\":\"Platform\",\"phoneNumber\":\"01012345678\",\"phoneCountryCode\":82}]},\"checkerDetectedValue\":{\"type\":\"\",\"value\":[{\"agentId\":\"agentIdtest\",\"agentValue\":true}]},\"unit\":\"%\",\"threshold\":5,\"notes\":\"Note Example\",\"sequenceCount\":4}\n";
     }
+    
     @Test
     public void BooleanValueAgentCheckerTest() throws IOException {
         String content = "{\"pinpointUrl\":\"http://pinpoint.com\",\"batchEnv\":\"release\",\"applicationId\":\"TESTAPP\",\"serviceType\":\"TOMCAT\",\"checkerName\":\"HEAP USAGE RATE\",\"checkerType\":\"LongValueAgentChecker\",\"userGroup\":{\"userGroupId\":\"Group-1\",\"userGroupMembers\":[{\"id\":null,\"name\":\"minsookim\",\"email\":\"pinpoint@naver.com\",\"department\":\"Platform\",\"phoneNumber\":\"01012345678\",\"phoneCountryCode\":82}]},\"checkerDetectedValue\":{\"type\":\"BooleanValueAgentChecker\",\"value\":[{\"agentId\":\"agentIdtest\",\"agentValue\":true}]},\"unit\":\"%\",\"threshold\":5,\"notes\":\"Note Example\",\"sequenceCount\":4}\n";
@@ -35,5 +36,16 @@ public class JacksonDeserializeTest {
         CheckerDetectedValue detectedValue = json.parseObject(content).getCheckerDetectedValue();
     }
     
-    // TODO: 나머지 체커들
+    @Test
+    public void LongValueAlarmCheckerTest() throws IOException {
+    }
+    
+    @Test
+    public void LongValueAgentCheckerTest() throws IOException {
+    }
+    
+    @Test
+    public void DataSourceAlarmListValueCheckerTest() throws IOException {
+    }
+    
 }
