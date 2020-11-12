@@ -1,5 +1,7 @@
 package com.webhook.receiver.slack.webhook.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 public class WebhookPayload {
     private final String pinpointUrl;
     private final String batchEnv;

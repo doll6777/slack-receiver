@@ -23,8 +23,6 @@ public class WebhookSendController {
     
     @RequestMapping(value = "/slack", method = RequestMethod.POST)
     public ResponseEntity<Void> sendWebhook(@RequestBody WebhookPayload webhookPayload) throws JsonProcessingException {
-        String payload = new ObjectMapper().writeValueAsString(webhookPayload);
-        System.out.println(payload);
         if(slackNotifier.send(webhookPayload)) {
             return new ResponseEntity<>(HttpStatus.OK);
         }

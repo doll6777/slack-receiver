@@ -1,8 +1,6 @@
 package com.webhook.receiver.slack.webhook.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.webhook.receiver.slack.webhook.vo.UserGroup;
-import com.webhook.receiver.slack.webhook.vo.WebhookPayload;
+import com.webhook.receiver.slack.webhook.TestJsonFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,20 +16,61 @@ class WebhookSendControllerTest {
     @Autowired
     private MockMvc mvc;
     
-    @Autowired
-    private ObjectMapper objectMapper;
-    
     @MockBean
     WebhookSendController loggedUserManager;
     
     @Test
-    void sendWebhook() throws Exception {
-        String webhookPayload = objectMapper.writeValueAsString(new WebhookPayload( "", "", "", "", "", "LongVeAlarmChecker", new UserGroup(), null, "", 1, "", 1));
-    
+    void sendWebhook_LongValueAlarmChecker_200() throws Exception {
+        String webhookPayloadString = TestJsonFactory.getLongValueAlarmCheckerContent();
+        
         mvc.perform(MockMvcRequestBuilders.post("/api/send/slack")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(webhookPayload)
+                .content(webhookPayloadString)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+    
+    @Test
+    void sendWebhook_BooleanValueChecker_200() throws Exception {
+        String webhookPayloadString = TestJsonFactory.getBooleanValueCheckerContent();
+        
+        mvc.perform(MockMvcRequestBuilders.post("/api/send/slack")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(webhookPayloadString)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+    
+    @Test
+    void sendWebhook_LongValueAgentChecker_200() throws Exception {
+        String webhookPayloadString = TestJsonFactory.getLongValueAgentCheckerContent();
+        
+        mvc.perform(MockMvcRequestBuilders.post("/api/send/slack")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(webhookPayloadString)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+    
+    @Test
+    void sendWebhook_DataSourceAlarmListValueAgentChecker_200() throws Exception {
+        String webhookPayloadString = TestJsonFactory.getDataSourceAlarmListValueAgentCheckerContent();
+        
+        mvc.perform(MockMvcRequestBuilders.post("/api/send/slack")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(webhookPayloadString)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+    
+    @Test
+    void sendWebhook_NotExistChecker_400() throws Exception {
+        String webhookPayloadString = TestJsonFactory.getNotExistCheckerContent();
+        
+        mvc.perform(MockMvcRequestBuilders.post("/api/send/slack")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(webhookPayloadString)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 }
