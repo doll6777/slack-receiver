@@ -26,4 +26,4 @@ http://localhost:8085/api/send/slack
 | wrong type   | 400  |
 
 ## screenshot
-![screenshot.png](./screenshot.png =50x20)
+<img src="./screenshot.png" width="500">
