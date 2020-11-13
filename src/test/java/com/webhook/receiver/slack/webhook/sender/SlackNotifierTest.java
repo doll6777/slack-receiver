@@ -36,8 +36,6 @@ class SlackNotifierTest {
     
     @Test
     void sendFailWhenIncomingUrlEmpty() {
-        when(restTemplate.postForObject(any(URI.class), any(SlackPayload.class), eq(String.class))).thenReturn("");
-    
         slackNotifier = new SlackNotifier(restTemplate, "");
     
         WebhookPayload payload = new WebhookPayload("", "", "", "", "", "", new UserGroup(), new LongValueAlarmCheckerDetectedValue(1L), "", 1, "", 1);

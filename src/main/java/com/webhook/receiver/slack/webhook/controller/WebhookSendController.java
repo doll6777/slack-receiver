@@ -1,8 +1,6 @@
 package com.webhook.receiver.slack.webhook.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.webhook.receiver.slack.webhook.sender.SlackNotifier;
+import com.webhook.receiver.slack.webhook.sender.Notifier;
 import com.webhook.receiver.slack.webhook.vo.WebhookPayload;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/send")
 public class WebhookSendController {
     
-    private final SlackNotifier slackNotifier;
+    private final Notifier slackNotifier;
     
-    public WebhookSendController(SlackNotifier slackNotifier) {
+    public WebhookSendController(Notifier slackNotifier) {
         this.slackNotifier = slackNotifier;
     }
     
     @RequestMapping(value = "/slack", method = RequestMethod.POST)
-    public ResponseEntity<Void> sendWebhook(@RequestBody WebhookPayload webhookPayload) throws JsonProcessingException {
+    public ResponseEntity<Void> sendWebhook(@RequestBody WebhookPayload webhookPayload) {
         if(slackNotifier.send(webhookPayload)) {
             return new ResponseEntity<>(HttpStatus.OK);
         }

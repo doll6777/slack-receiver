@@ -1,17 +1,14 @@
 package com.webhook.receiver.slack.webhook;
 
 import com.webhook.receiver.slack.webhook.vo.*;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 
-@RunWith(SpringRunner.class)
 @JsonTest
 public class JacksonDeserializeTest {
     
@@ -26,11 +23,13 @@ public class JacksonDeserializeTest {
         Assertions.assertTrue(detectedValue instanceof BooleanValueAgentCheckerDetectedValue);
     }
     
-    @Test(expected = Exception.class)
-    public void NotExistCheckerNameTest() throws IOException {
+    @Test
+    public void NotExistCheckerNameTest() {
         String content = TestJsonFactory.getNotExistCheckerContent();
     
-        CheckerDetectedValue detectedValue = json.parseObject(content).getCheckerDetectedValue();
+        Assertions.assertThrows(Exception.class, ()-> {
+            CheckerDetectedValue detectedValue = json.parseObject(content).getCheckerDetectedValue();
+        });
     }
     
     @Test

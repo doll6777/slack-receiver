@@ -17,7 +17,7 @@ public abstract class AgentCheckerDetectedValue<T> implements CheckerDetectedVal
     public String toString() {
         StringBuilder agentValues = new StringBuilder();
         for (DetectedAgent<T> detectedAgent : value) {
-            agentValues.append(detectedAgent.toString());
+            agentValues.append(detectedAgent.toString()).append("\n");
         }
         return agentValues.toString();
     }

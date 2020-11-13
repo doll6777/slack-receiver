@@ -15,7 +15,7 @@ public class DetectedAgent<T> {
     
     @Override
     public String toString() {
-        return "DetectedAgent{" +
+        return "{" +
                 "agentId='" + agentId + '\'' +
                 ", agentValue=" + agentValue +
                 '}';

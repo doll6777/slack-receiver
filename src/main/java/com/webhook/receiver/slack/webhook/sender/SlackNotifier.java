@@ -1,5 +1,7 @@
 package com.webhook.receiver.slack.webhook.sender;
 
+import com.webhook.receiver.slack.webhook.sender.vo.Field;
+import com.webhook.receiver.slack.webhook.sender.vo.SlackAttachment;
 import com.webhook.receiver.slack.webhook.sender.vo.SlackPayload;
 import com.webhook.receiver.slack.webhook.vo.WebhookPayload;
 import org.slf4j.Logger;
@@ -10,16 +12,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
-public class SlackNotifier {
+public class SlackNotifier implements Notifier {
     
     private final Logger logger = LoggerFactory.getLogger(SlackNotifier.class.getName());
     private final RestTemplate restTemplate;
-    private String incomingWebhookUrl;
-    
-    private static final String SLACK_MESSAGE_TEMPLATE = "[PINPOINT-%s] %s Alarm for %s Service. %s, (Threshold: %s%s) #%s ";
+    private final String incomingWebhookUrl;
     
     @Autowired
     public SlackNotifier(RestTemplate restTemplate, @Value("${slack.webhook.url}") final String incomingWebhookUrl) {
@@ -33,12 +34,12 @@ public class SlackNotifier {
             return false;
         }
         
-        String sendMessage = generateMessage(webhookPayload);
-        SlackPayload slackPayload = new SlackPayload(sendMessage);
+        List<SlackAttachment> attachments = buildAttachments(webhookPayload);
+        SlackPayload slackPayload = new SlackPayload(attachments);
         
         try {
             restTemplate.postForObject(new URI(incomingWebhookUrl), slackPayload, String.class);
-            logger.info("Send Slack : {}", sendMessage);
+            logger.info("Sent slack message to {}", incomingWebhookUrl);
         } catch (Exception e) {
             logger.error(e.getMessage());
             return false;
@@ -46,15 +47,25 @@ public class SlackNotifier {
         return true;
     }
     
-    private String generateMessage(WebhookPayload webhookPayload) {
-        return String.format(SLACK_MESSAGE_TEMPLATE,
-                webhookPayload.getBatchEnv(),
-                webhookPayload.getCheckerName(),
-                webhookPayload.getApplicationId(),
-                webhookPayload.getCheckerDetectedValue().toString(),
-                webhookPayload.getThreshold(),
-                webhookPayload.getUnit(),
-                webhookPayload.getSequenceCount()
-        );
+    List<SlackAttachment> buildAttachments(WebhookPayload webhookPayload) {
+        SlackAttachment slackAttachment = new SlackAttachment();
+    
+        Field applicationIdField = new Field("applicationId", webhookPayload.getApplicationId());
+        Field sequenceCountField = new Field("sequenceCount", webhookPayload.getSequenceCount().toString());
+        Field unitField = new Field("unit", webhookPayload.getUnit());
+        Field thresholdField = new Field("threshold", webhookPayload.getThreshold().toString());
+        Field detectedValue = new Field("detectedValue", webhookPayload.getCheckerDetectedValue().toString());
+        Field envField = new Field("env", webhookPayload.getBatchEnv());
+    
+        slackAttachment.addField(envField);
+        slackAttachment.addField(applicationIdField);
+        slackAttachment.addField(sequenceCountField);
+        slackAttachment.addField(unitField);
+        slackAttachment.addField(thresholdField);
+        slackAttachment.addField(detectedValue);
+    
+        List<SlackAttachment> attachmentList = new ArrayList<>();
+        attachmentList.add(slackAttachment);
+        return attachmentList;
     }
 }
