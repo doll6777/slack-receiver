@@ -19,7 +19,7 @@ public class JacksonDeserializeTest {
     public void BooleanValueAgentCheckerTest() throws IOException {
         String content = TestJsonFactory.getBooleanValueCheckerContent();
         
-        CheckerDetectedValue detectedValue = json.parseObject(content).getCheckerDetectedValue();
+        CheckerDetectedValue detectedValue = json.parseObject(content).getChecker().getDetectedValue();
         Assertions.assertTrue(detectedValue instanceof BooleanValueAgentCheckerDetectedValue);
     }
     
@@ -28,7 +28,7 @@ public class JacksonDeserializeTest {
         String content = TestJsonFactory.getNotExistCheckerContent();
     
         Assertions.assertThrows(Exception.class, ()-> {
-            CheckerDetectedValue detectedValue = json.parseObject(content).getCheckerDetectedValue();
+            CheckerDetectedValue detectedValue = json.parseObject(content).getChecker().getDetectedValue();
         });
     }
     
@@ -36,7 +36,7 @@ public class JacksonDeserializeTest {
     public void LongValueAlarmCheckerTest() throws IOException {
         String content = TestJsonFactory.getLongValueAlarmCheckerContent();
     
-        CheckerDetectedValue detectedValue = json.parseObject(content).getCheckerDetectedValue();
+        CheckerDetectedValue detectedValue = json.parseObject(content).getChecker().getDetectedValue();
         Assertions.assertTrue(detectedValue instanceof LongValueAlarmCheckerDetectedValue);
     }
     
@@ -44,7 +44,7 @@ public class JacksonDeserializeTest {
     public void LongValueAgentCheckerTest() throws IOException {
         String content = TestJsonFactory.getLongValueAgentCheckerContent();
     
-        CheckerDetectedValue detectedValue = json.parseObject(content).getCheckerDetectedValue();
+        CheckerDetectedValue detectedValue = json.parseObject(content).getChecker().getDetectedValue();
         Assertions.assertTrue(detectedValue instanceof LongValueAgentCheckerDetectedValue);
     }
     
@@ -52,7 +52,7 @@ public class JacksonDeserializeTest {
     public void DataSourceAlarmListValueCheckerTest() throws IOException {
         String content = TestJsonFactory.getDataSourceAlarmListValueAgentCheckerContent();
     
-        CheckerDetectedValue detectedValue = json.parseObject(content).getCheckerDetectedValue();
+        CheckerDetectedValue detectedValue = json.parseObject(content).getChecker().getDetectedValue();
         Assertions.assertTrue(detectedValue instanceof DataSourceAlarmListValueAgentCheckerDetectedValue);
     }
 }

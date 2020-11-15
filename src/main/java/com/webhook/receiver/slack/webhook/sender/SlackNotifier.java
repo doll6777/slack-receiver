@@ -54,7 +54,7 @@ public class SlackNotifier implements Notifier {
         Field sequenceCountField = new Field("sequenceCount", webhookPayload.getSequenceCount().toString());
         Field unitField = new Field("unit", webhookPayload.getUnit());
         Field thresholdField = new Field("threshold", webhookPayload.getThreshold().toString());
-        Field detectedValue = new Field("detectedValue", webhookPayload.getCheckerDetectedValue().toString());
+        Field detectedValue = new Field("detectedValue", webhookPayload.getChecker().getDetectedValue().toString());
         Field envField = new Field("env", webhookPayload.getBatchEnv());
     
         slackAttachment.addField(envField);

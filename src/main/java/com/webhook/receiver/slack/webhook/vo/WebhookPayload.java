@@ -1,7 +1,5 @@
 package com.webhook.receiver.slack.webhook.vo;
 
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
 public class WebhookPayload {
     private final String pinpointUrl;
     private final String batchEnv;
@@ -10,13 +8,13 @@ public class WebhookPayload {
     private final String checkerName;
     private final String checkerType;
     private final UserGroup userGroup;
-    private final CheckerDetectedValue checkerDetectedValue;
+    private final Checker checker;
     private final String unit;
     private final Integer threshold;
     private final String notes;
     private final Integer sequenceCount;
     
-    public WebhookPayload(String pinpointUrl, String batchEnv, String applicationId, String serviceType, String checkerName, String checkerType, UserGroup userGroup, CheckerDetectedValue checkerDetectedValue, String unit, Integer threshold, String notes, Integer sequenceCount) {
+    public WebhookPayload(String pinpointUrl, String batchEnv, String applicationId, String serviceType, String checkerName, String checkerType, UserGroup userGroup, Checker checker, String unit, Integer threshold, String notes, Integer sequenceCount) {
         this.pinpointUrl = pinpointUrl;
         this.batchEnv = batchEnv;
         this.applicationId = applicationId;
@@ -24,7 +22,7 @@ public class WebhookPayload {
         this.checkerName = checkerName;
         this.checkerType = checkerType;
         this.userGroup = userGroup;
-        this.checkerDetectedValue = checkerDetectedValue;
+        this.checker = checker;
         this.unit = unit;
         this.threshold = threshold;
         this.notes = notes;
@@ -59,8 +57,8 @@ public class WebhookPayload {
         return userGroup;
     }
     
-    public CheckerDetectedValue getCheckerDetectedValue() {
-        return checkerDetectedValue;
+    public Checker getChecker() {
+        return checker;
     }
     
     public String getUnit() {
@@ -89,7 +87,7 @@ public class WebhookPayload {
                 ", checkerName='" + checkerName + '\'' +
                 ", checkerType='" + checkerType + '\'' +
                 ", userGroup=" + userGroup +
-                ", checkerDetectedValue=" + checkerDetectedValue +
+                ", checker=" + checker +
                 ", unit='" + unit + '\'' +
                 ", threshold=" + threshold +
                 ", notes='" + notes + '\'' +
