@@ -14,4 +14,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 })
 public abstract class Checker {
     String name;
+    public String getName() {
+        return name;
+    }
+    public abstract String getDetectedValueString();
 }

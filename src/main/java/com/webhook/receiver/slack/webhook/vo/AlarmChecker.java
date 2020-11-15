@@ -13,7 +13,7 @@ public abstract class AlarmChecker<T> extends Checker {
     }
     
     @Override
-    public String toString() {
+    public String getDetectedValueString() {
         return detectedValue.toString();
     }
 }

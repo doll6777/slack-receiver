@@ -51,11 +51,13 @@ public class SlackNotifier implements Notifier {
     List<SlackAttachment> buildAttachments(WebhookPayload webhookPayload) {
         SlackAttachment slackAttachment = new SlackAttachment();
     
+        Field checkerNameField = new Field("checkerName", webhookPayload.getChecker().getName());
         Field applicationIdField = new Field("applicationId", webhookPayload.getApplicationId());
         Field sequenceCountField = new Field("sequenceCount", webhookPayload.getSequenceCount().toString());
         Field unitField = new Field("unit", webhookPayload.getUnit());
         Field thresholdField = new Field("threshold", webhookPayload.getThreshold().toString());
-        Field detectedValue = new Field("detectedValue", webhookPayload.getChecker().toString());
+        
+        Field detectedValue = new Field("detectedValue", webhookPayload.getChecker().getDetectedValueString());
         Field envField = new Field("env", webhookPayload.getBatchEnv());
     
         final StringBuilder owners = new StringBuilder();
@@ -65,6 +67,7 @@ public class SlackNotifier implements Notifier {
         }
         Field ownerField = new Field("owner", owners.toString());
     
+        slackAttachment.addField(checkerNameField);
         slackAttachment.addField(envField);
         slackAttachment.addField(applicationIdField);
         slackAttachment.addField(sequenceCountField);

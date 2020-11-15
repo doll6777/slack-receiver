@@ -14,7 +14,7 @@ public abstract class AgentChecker<T> extends Checker {
     }
     
     @Override
-    public String toString() {
+    public String getDetectedValueString() {
         StringBuilder agentValues = new StringBuilder();
         for (DetectedAgent<T> detectedAgent : detectedValue) {
             agentValues.append(detectedAgent.toString()).append("\n");
