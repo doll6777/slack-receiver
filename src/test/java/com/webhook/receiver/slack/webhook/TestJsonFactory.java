@@ -7,13 +7,17 @@ public class TestJsonFactory {
                 "\"batchEnv\":\"release\"," +
                 "\"applicationId\":\"TESTAPP\"," +
                 "\"serviceType\":\"TOMCAT\"," +
-                "\"checkerName\":\"HEAP USAGE RATE\"," +
-                "\"checkerType\":\"LongValueAgentChecker\"," +
                 "\"userGroup\":{\"userGroupId\":\"Group-1\"," +
                 "\"userGroupMembers\":[{\"id\":null,\"name\":\"minsookim\"," +
                 "\"email\":\"pinpoint@naver.com\",\"department\":\"Platform\"," +
                 "\"phoneNumber\":\"01012345678\",\"phoneCountryCode\":82}]}," +
-                "\"checkerDetectedValue\":{\"type\":\"" + checkerType + "\",\"value\":" + value + "},\"unit\":\"%\",\"threshold\":5,\"notes\":\"Note Example\"," +
+                "\"checker\": {\n" +
+                "  \"name\": \"HEAP USAGE RATE\",\n" +
+                "  \"type\": \"" + checkerType + "\",\n" +
+                "  \"value\": " + value + " }," +
+                "\"unit\":\"%\"," +
+                "\"threshold\":5," +
+                "\"notes\":\"Note Example\"," +
                 "\"sequenceCount\":4}\n";
     }
     

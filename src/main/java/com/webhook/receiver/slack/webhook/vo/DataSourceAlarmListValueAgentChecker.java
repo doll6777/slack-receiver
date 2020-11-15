@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.List;
 
 @JsonTypeName("DataSourceAlarmListValueAgentChecker")
-public class DataSourceAlarmListValueAgentCheckerDetectedValue extends AgentCheckerDetectedValue<List<DataSourceAlarm>> {
+public class DataSourceAlarmListValueAgentChecker extends AgentChecker<DataSourceAlarmList> {
     
     @JsonCreator
-    public DataSourceAlarmListValueAgentCheckerDetectedValue(List<DetectedAgent<List<DataSourceAlarm>>> value) {
-        super(value);
+    public DataSourceAlarmListValueAgentChecker(List<DetectedAgent<DataSourceAlarmList>> detectedValue) {
+        super(detectedValue);
     }
 }

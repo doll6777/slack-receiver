@@ -1,7 +1,7 @@
 package com.webhook.receiver.slack.webhook.sender;
 
 import com.webhook.receiver.slack.webhook.sender.vo.SlackPayload;
-import com.webhook.receiver.slack.webhook.vo.LongValueAlarmCheckerDetectedValue;
+import com.webhook.receiver.slack.webhook.vo.LongValueAlarmChecker;
 import com.webhook.receiver.slack.webhook.vo.UserGroup;
 import com.webhook.receiver.slack.webhook.vo.WebhookPayload;
 import org.junit.jupiter.api.Assertions;
@@ -15,6 +15,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.ArrayList;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -38,7 +39,7 @@ class SlackNotifierTest {
     void sendFailWhenIncomingUrlEmpty() {
         slackNotifier = new SlackNotifier(restTemplate, "");
     
-        WebhookPayload payload = new WebhookPayload("", "", "", "", "", "", new UserGroup(), new LongValueAlarmCheckerDetectedValue(1L), "", 1, "", 1);
+        WebhookPayload payload = new WebhookPayload("pinpointUrl", "release", "applicationId", "serviceType", new UserGroup("userGroupId", new ArrayList<>()), new LongValueAlarmChecker(1L), "%", 1, "", 1);
     
         boolean result = slackNotifier.send(payload);
         Assertions.assertFalse(result);
@@ -49,8 +50,8 @@ class SlackNotifierTest {
         lenient().when(restTemplate.postForObject(any(URI.class), any(SlackPayload.class), eq(String.class))).thenThrow(RestClientException.class);
         
         slackNotifier = new SlackNotifier(restTemplate, "http://webhook.url.com");
-        
-        WebhookPayload payload = new WebhookPayload("", "", "", "", "", "", new UserGroup(), new LongValueAlarmCheckerDetectedValue(1L), "", 1, "", 1);
+    
+        WebhookPayload payload = new WebhookPayload("pinpointUrl", "release", "applicationId", "serviceType", new UserGroup("userGroupId", new ArrayList<>()), new LongValueAlarmChecker(1L), "%", 1, "", 1);
         
         boolean result = slackNotifier.send(payload);
         Assertions.assertFalse(result);
@@ -61,8 +62,8 @@ class SlackNotifierTest {
         when(restTemplate.postForObject(any(URI.class), any(SlackPayload.class), eq(String.class))).thenReturn("");
         slackNotifier = new SlackNotifier(restTemplate, "http://webhook.send.com");
     
-        WebhookPayload payload = new WebhookPayload("", "", "", "", "", "", new UserGroup(), new LongValueAlarmCheckerDetectedValue(1L), "", 1, "", 1);
-    
+        WebhookPayload payload = new WebhookPayload("pinpointUrl", "release", "applicationId", "serviceType", new UserGroup("userGroupId", new ArrayList<>()), new LongValueAlarmChecker(1L), "%", 1, "", 1);
+
         boolean result = slackNotifier.send(payload);
         Assertions.assertTrue(result);
     }

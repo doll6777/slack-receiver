@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("LongValueAlarmChecker")
-public class LongValueAlarmCheckerDetectedValue extends AlarmCheckerDetectedValue<Long> {
+public class LongValueAlarmChecker extends AlarmChecker<Long> {
     
     @JsonCreator
-    public LongValueAlarmCheckerDetectedValue(Long value) {
-        super(value);
+    public LongValueAlarmChecker(Long detectedValue) {
+        super(detectedValue);
     }
 }

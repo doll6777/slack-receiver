@@ -1,30 +1,24 @@
 package com.webhook.receiver.slack.webhook.vo;
 
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
 public class WebhookPayload {
     private final String pinpointUrl;
     private final String batchEnv;
     private final String applicationId;
     private final String serviceType;
-    private final String checkerName;
-    private final String checkerType;
     private final UserGroup userGroup;
-    private final CheckerDetectedValue checkerDetectedValue;
+    private final Checker checker;
     private final String unit;
     private final Integer threshold;
     private final String notes;
     private final Integer sequenceCount;
     
-    public WebhookPayload(String pinpointUrl, String batchEnv, String applicationId, String serviceType, String checkerName, String checkerType, UserGroup userGroup, CheckerDetectedValue checkerDetectedValue, String unit, Integer threshold, String notes, Integer sequenceCount) {
+    public WebhookPayload(String pinpointUrl, String batchEnv, String applicationId, String serviceType, UserGroup userGroup, Checker checker, String unit, Integer threshold, String notes, Integer sequenceCount) {
         this.pinpointUrl = pinpointUrl;
         this.batchEnv = batchEnv;
         this.applicationId = applicationId;
         this.serviceType = serviceType;
-        this.checkerName = checkerName;
-        this.checkerType = checkerType;
         this.userGroup = userGroup;
-        this.checkerDetectedValue = checkerDetectedValue;
+        this.checker = checker;
         this.unit = unit;
         this.threshold = threshold;
         this.notes = notes;
@@ -47,20 +41,12 @@ public class WebhookPayload {
         return serviceType;
     }
     
-    public String getCheckerName() {
-        return checkerName;
-    }
-    
-    public String getCheckerType() {
-        return checkerType;
-    }
-    
     public UserGroup getUserGroup() {
         return userGroup;
     }
     
-    public CheckerDetectedValue getCheckerDetectedValue() {
-        return checkerDetectedValue;
+    public Checker getChecker() {
+        return checker;
     }
     
     public String getUnit() {
@@ -86,10 +72,8 @@ public class WebhookPayload {
                 ", batchEnv='" + batchEnv + '\'' +
                 ", applicationId='" + applicationId + '\'' +
                 ", serviceType='" + serviceType + '\'' +
-                ", checkerName='" + checkerName + '\'' +
-                ", checkerType='" + checkerType + '\'' +
                 ", userGroup=" + userGroup +
-                ", checkerDetectedValue=" + checkerDetectedValue +
+                ", checkerDetectedValue=" + checker +
                 ", unit='" + unit + '\'' +
                 ", threshold=" + threshold +
                 ", notes='" + notes + '\'' +

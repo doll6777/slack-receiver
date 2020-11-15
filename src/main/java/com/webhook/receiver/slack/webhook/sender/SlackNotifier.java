@@ -3,6 +3,7 @@ package com.webhook.receiver.slack.webhook.sender;
 import com.webhook.receiver.slack.webhook.sender.vo.Field;
 import com.webhook.receiver.slack.webhook.sender.vo.SlackAttachment;
 import com.webhook.receiver.slack.webhook.sender.vo.SlackPayload;
+import com.webhook.receiver.slack.webhook.vo.UserMember;
 import com.webhook.receiver.slack.webhook.vo.WebhookPayload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,8 +55,15 @@ public class SlackNotifier implements Notifier {
         Field sequenceCountField = new Field("sequenceCount", webhookPayload.getSequenceCount().toString());
         Field unitField = new Field("unit", webhookPayload.getUnit());
         Field thresholdField = new Field("threshold", webhookPayload.getThreshold().toString());
-        Field detectedValue = new Field("detectedValue", webhookPayload.getCheckerDetectedValue().toString());
+        Field detectedValue = new Field("detectedValue", webhookPayload.getChecker().toString());
         Field envField = new Field("env", webhookPayload.getBatchEnv());
+    
+        final StringBuilder owners = new StringBuilder();
+        List<UserMember> userMembers = webhookPayload.getUserGroup().getUserGroupMembers();
+        for(UserMember userMember : userMembers) {
+            owners.append("@").append(userMember.getId()).append("\n");
+        }
+        Field ownerField = new Field("owner", owners.toString());
     
         slackAttachment.addField(envField);
         slackAttachment.addField(applicationIdField);
@@ -63,6 +71,7 @@ public class SlackNotifier implements Notifier {
         slackAttachment.addField(unitField);
         slackAttachment.addField(thresholdField);
         slackAttachment.addField(detectedValue);
+        slackAttachment.addField(ownerField);
     
         List<SlackAttachment> attachmentList = new ArrayList<>();
         attachmentList.add(slackAttachment);

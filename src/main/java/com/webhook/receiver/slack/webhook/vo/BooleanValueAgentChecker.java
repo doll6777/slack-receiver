@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.List;
 
 @JsonTypeName("BooleanValueAgentChecker")
-public class BooleanValueAgentCheckerDetectedValue extends AgentCheckerDetectedValue<Boolean> {
+public class BooleanValueAgentChecker extends AgentChecker<Boolean> {
     
     @JsonCreator
-    public BooleanValueAgentCheckerDetectedValue(List<DetectedAgent<Boolean>> value) {
-        super(value);
+    public BooleanValueAgentChecker(List<DetectedAgent<Boolean>> detectedValue) {
+        super(detectedValue);
     }
 }

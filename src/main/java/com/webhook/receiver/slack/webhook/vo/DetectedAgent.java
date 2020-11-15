@@ -1,7 +1,6 @@
 package com.webhook.receiver.slack.webhook.vo;
 
 public class DetectedAgent<T> {
-    
     private String agentId;
     private T agentValue;
     

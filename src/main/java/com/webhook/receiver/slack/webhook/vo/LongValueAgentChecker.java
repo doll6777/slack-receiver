@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.List;
 
 @JsonTypeName("LongValueAgentChecker")
-public class LongValueAgentCheckerDetectedValue extends AgentCheckerDetectedValue<Long> {
+public class LongValueAgentChecker extends AgentChecker<Long> {
     
     @JsonCreator
-    public LongValueAgentCheckerDetectedValue(List<DetectedAgent<Long>> value) {
-        super(value);
+    public LongValueAgentChecker(List<DetectedAgent<Long>> detectedValue) {
+        super(detectedValue);
     }
 }

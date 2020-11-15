@@ -1,7 +1,6 @@
 package com.webhook.receiver.slack.webhook.vo;
 
 public class DataSourceAlarm {
-    
     private String databaseName;
     private long connectionValue;
     
@@ -16,5 +15,13 @@ public class DataSourceAlarm {
     
     public long getConnectionValue() {
         return connectionValue;
+    }
+    
+    @Override
+    public String toString() {
+        return "{" +
+                "databaseName='" + databaseName + '\'' +
+                ", connectionValue=" + connectionValue +
+                '}';
     }
 }
