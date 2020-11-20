@@ -11,7 +11,7 @@ You can reuse this server to use sending slack message to your own channel.
 If you don't have any webhook incoming url yet, please refer to this documentation.  
 [slack incoming webhook integration](https://api.slack.com/messaging/webhooks)
 1. in application.properties  
-slack.webhook.url={SLACK_INCOMING_WEBHOOK_URL}
+slack.incoming.webhook.url={SLACK_INCOMING_WEBHOOK_URL}
 2. ./mvnw package  
 3. java -jar target/slack-receiver-0.0.1-SNAPSHOT.jar
 

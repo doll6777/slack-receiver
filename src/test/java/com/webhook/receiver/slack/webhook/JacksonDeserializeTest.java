@@ -1,6 +1,6 @@
 package com.webhook.receiver.slack.webhook;
 
-import com.webhook.receiver.slack.webhook.vo.*;
+import com.webhook.receiver.slack.vo.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
