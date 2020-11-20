@@ -30,11 +30,6 @@ public class SlackNotifier implements Notifier {
     }
     
     public boolean send(WebhookPayload webhookPayload) {
-        if(incomingWebhookUrl.isEmpty()) {
-            logger.error("slack incoming webhook url is empty in application.properties");
-            return false;
-        }
-        
         List<SlackAttachment> attachments = buildAttachments(webhookPayload);
         SlackPayload slackPayload = new SlackPayload(attachments);
         
