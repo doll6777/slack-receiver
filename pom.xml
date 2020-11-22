@@ -9,12 +9,12 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.webhook.receiver.slack</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>slack-receiver</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>receiver</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Slack Receiver Example</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
     </properties>
 
     <dependencies>
